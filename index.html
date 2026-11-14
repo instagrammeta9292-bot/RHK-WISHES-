@@ -1,0 +1,540 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RHK WISHES</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+    background: #fff;
+}
+
+.screen {
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+    background: white;
+}
+
+/* HEADER */
+.header {
+    height: 65px;
+    min-height: 65px;
+    padding: 0 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 21px;
+    font-weight: 800;
+    letter-spacing: -0.8px;
+}
+
+.rhk {
+    color: #000;
+}
+
+.wishes {
+    color: #999;
+    font-weight: 600;
+}
+
+/* MENU BUTTON */
+.menu-btn {
+    width: 35px;
+    height: 35px;
+    border: none;
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.menu-btn span {
+    width: 23px;
+    height: 2px;
+    background: #000;
+    border-radius: 5px;
+}
+
+/* MAIN CONTENT */
+.content {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 5px 22px 15px;
+    gap: 20px;
+}
+
+/* SECTION */
+.home-section {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+/* TRENDING */
+.trending-section {
+    flex: 0 0 34%;
+}
+
+.section-title {
+    font-size: 23px;
+    font-weight: 700;
+    margin-bottom: 13px;
+    flex-shrink: 0;
+}
+
+.trending-title {
+    color: #999;
+}
+
+.birthday-title .black-text {
+    color: #000;
+}
+
+.birthday-title .grey-text {
+    color: #999;
+}
+
+/* TRENDING CARD */
+.trending-card {
+    flex: 1;
+    min-height: 0;
+    width: 100%;
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 15px;
+}
+
+/* TRENDING IMAGE */
+.trending-link {
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 15px;
+}
+
+.trending-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background: #fff;
+}
+
+/* BIRTHDAY SECTION */
+.templates-section {
+    flex: 1;
+    overflow: hidden;
+}
+
+/* TEMPLATE SCROLL AREA */
+.template-area {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: none;
+}
+
+.template-area::-webkit-scrollbar {
+    display: none;
+}
+
+/* TWO COLUMN TEMPLATE GRID */
+.template-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 15px;
+    padding: 2px 2px 15px;
+}
+
+/* LARGE TEMPLATE CARD */
+.template-card {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    aspect-ratio: 1.18 / 1;
+    overflow: hidden;
+    background: #fff;
+    border: 2px solid #ededed;
+    border-radius: 25px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.template-card:active {
+    transform: scale(0.97);
+}
+
+/* IMAGE */
+.template-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background: #fff;
+}
+
+/* TEMPLATE COUNT */
+.template-count {
+    font-size: 12px;
+    color: #aaa;
+    font-weight: 400;
+    margin-left: 5px;
+}
+
+/* EMPTY MESSAGE */
+.empty-message {
+    color: #aaa;
+    font-size: 13px;
+    padding: 15px 0;
+    display: none;
+}
+
+/* MENU OVERLAY */
+.menu-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0.25);
+    backdrop-filter: blur(7px);
+    -webkit-backdrop-filter: blur(7px);
+    z-index: 10;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.3s ease;
+}
+
+.menu-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* GLASS MENU */
+.menu-window {
+    position: absolute;
+    top: 58px;
+    right: 15px;
+    width: 230px;
+    background: rgba(255,255,255,0.72);
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
+    border: 1px solid rgba(255,255,255,0.9);
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+    z-index: 11;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px) scale(0.95);
+    transform-origin: top right;
+    transition: 0.3s ease;
+}
+
+.menu-window.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+}
+
+.menu-title {
+    font-size: 17px;
+    font-weight: 800;
+    color: #111;
+    margin-bottom: 15px;
+}
+
+.menu-link {
+    display: block;
+    padding: 13px 0;
+    color: #333;
+    text-decoration: none;
+    font-size: 14px;
+    border-top: 1px solid rgba(0,0,0,0.07);
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="screen">
+
+    <!-- HEADER -->
+    <header class="header">
+
+        <div class="logo">
+            <span class="rhk">RHK</span>
+            <span class="wishes">WISHES</span>
+        </div>
+
+        <button class="menu-btn" id="menuBtn" aria-label="Open menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="content">
+
+        <!-- TRENDING -->
+        <section class="home-section trending-section">
+
+            <h2 class="section-title trending-title">
+                Trending
+            </h2>
+
+            <div class="trending-card" id="trendingCard"></div>
+
+        </section>
+
+        <!-- BIRTHDAY TEMPLATES -->
+        <section class="home-section templates-section">
+
+            <h2 class="section-title birthday-title">
+                <span class="black-text">Birthday</span>
+                <span class="grey-text">Template</span>
+
+                <span class="template-count" id="templateCount">
+                    Loading...
+                </span>
+            </h2>
+
+            <div class="template-area">
+
+                <div class="template-grid" id="templateGrid">
+                </div>
+
+                <div class="empty-message" id="emptyMessage">
+                    No birthday templates available yet.
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- MENU BACKGROUND BLUR -->
+    <div class="menu-overlay" id="menuOverlay"></div>
+
+    <!-- FLOATING GLASS MENU -->
+    <div class="menu-window" id="menuWindow">
+
+        <div class="menu-title">RHK MENU</div>
+
+        <a href="#" class="menu-link">About</a>
+        <a href="#" class="menu-link">Contact</a>
+
+    </div>
+
+</div>
+
+<script>
+
+/* MENU */
+const menuBtn = document.getElementById("menuBtn");
+const menuWindow = document.getElementById("menuWindow");
+const menuOverlay = document.getElementById("menuOverlay");
+
+function toggleMenu() {
+    menuWindow.classList.toggle("active");
+    menuOverlay.classList.toggle("active");
+}
+
+function closeMenu() {
+    menuWindow.classList.remove("active");
+    menuOverlay.classList.remove("active");
+}
+
+menuBtn.addEventListener("click", toggleMenu);
+menuOverlay.addEventListener("click", closeMenu);
+
+
+/* BIRTHDAY TEMPLATE DETECTION */
+
+const templateGrid = document.getElementById("templateGrid");
+const templateCount = document.getElementById("templateCount");
+const emptyMessage = document.getElementById("emptyMessage");
+const trendingCard = document.getElementById("trendingCard");
+
+const MAX_TEMPLATES = 30;
+
+
+/* CHECK HTML FILE */
+async function checkTemplate(number) {
+
+    const file = `birthday${number}.html`;
+
+    try {
+        const response = await fetch(file, {
+            method: "HEAD",
+            cache: "no-store"
+        });
+
+        if (response.ok) return true;
+
+        if (response.status === 405) {
+            const fallback = await fetch(file, {
+                cache: "no-store"
+            });
+            return fallback.ok;
+        }
+
+        return false;
+
+    } catch (error) {
+        return false;
+    }
+}
+
+
+/* CREATE TEMPLATE CARD */
+function createTemplateCard(number) {
+
+    const fileName = `birthday${number}.html`;
+    const imageName = `birthday${number}.jpg`;
+
+    const card = document.createElement("a");
+
+    card.className = "template-card";
+    card.href = fileName;
+
+    const image = document.createElement("img");
+
+    image.className = "template-image";
+    image.src = imageName;
+    image.alt = `Birthday ${number}`;
+    image.loading = "lazy";
+
+    image.onerror = function() {
+        this.style.display = "none";
+    };
+
+    card.appendChild(image);
+
+    return card;
+}
+
+
+/* LOAD LATEST TRENDING TEMPLATE */
+function loadTrending(number) {
+
+    trendingCard.innerHTML = "";
+
+    const link = document.createElement("a");
+
+    link.className = "trending-link";
+    link.href = `birthday${number}.html`;
+
+    const image = document.createElement("img");
+
+    image.className = "trending-image";
+    image.src = `birthday${number}.jpg`;
+    image.alt = `Trending Birthday Template ${number}`;
+
+    image.onerror = function() {
+        this.style.display = "none";
+    };
+
+    link.appendChild(image);
+    trendingCard.appendChild(link);
+}
+
+
+/* LOAD AVAILABLE TEMPLATES */
+async function loadTemplates() {
+
+    templateGrid.innerHTML = "";
+    templateCount.textContent = "Checking...";
+    trendingCard.innerHTML = "";
+
+    let availableCount = 0;
+    let latestTemplate = 0;
+
+    const results = await Promise.all(
+        Array.from(
+            { length: MAX_TEMPLATES },
+            (_, index) => checkTemplate(index + 1)
+        )
+    );
+
+    results.forEach((available, index) => {
+
+        if (available) {
+
+            const number = index + 1;
+
+            availableCount++;
+
+            latestTemplate = Math.max(
+                latestTemplate,
+                number
+            );
+
+            templateGrid.appendChild(
+                createTemplateCard(number)
+            );
+
+        }
+
+    });
+
+    /* TEMPLATE COUNT */
+    templateCount.textContent =
+        `${availableCount} Available`;
+
+    /* EMPTY MESSAGE */
+    emptyMessage.style.display =
+        availableCount === 0 ? "block" : "none";
+
+    /* TRENDING */
+    if (latestTemplate > 0) {
+
+        loadTrending(latestTemplate);
+
+    } else {
+
+        trendingCard.innerHTML = "";
+
+    }
+}
+
+
+/* START */
+loadTemplates();
+
+</script>
+
+</body>
+</html>
