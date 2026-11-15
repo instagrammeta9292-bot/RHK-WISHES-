@@ -3,7 +3,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
 <title>Birthday Template Flow | RHK WISHES</title>
 
 <style>
@@ -15,66 +16,62 @@
 
 html, body {
     width: 100%;
-    min-height: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #f6f1eb;
+    font-family: Arial, sans-serif;
 }
 
 body {
-    background: #f6f1eb;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100svh;
-    overflow-x: hidden;
-    font-family: Arial, sans-serif;
+    height: 100vh;
+    height: 100dvh;
 }
 
 .stage {
     position: relative;
-    width: min(100vw, calc(100svh * 1.06925));
-    aspect-ratio: 1297 / 1213;
-    flex-shrink: 0;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
 }
 
 .stage img {
     display: block;
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: fill;
 }
 
-/* Invisible interactive buttons */
+/* Invisible clickable button areas */
+
 .hotspot {
     position: absolute;
-    bottom: 3.5%;
-    height: 9%;
-    display: block;
+    bottom: 0;
+    height: 12%;
     z-index: 5;
+    display: block;
     cursor: pointer;
-    border-radius: 12px;
     -webkit-tap-highlight-color: transparent;
 }
 
-/* View demo button */
+/* VIEW DEMO TEMPLATE */
+
 .demo-button {
-    left: 1.5%;
-    width: 48%;
+    left: 1%;
+    width: 49%;
 }
 
-/* Use template button */
+/* USE THIS TEMPLATE */
+
 .use-button {
-    right: 1.5%;
-    width: 48%;
+    right: 1%;
+    width: 49%;
 }
 
-/* Tap feedback */
+/* Tap effect */
+
 .hotspot:active {
-    background: rgba(255, 255, 255, 0.12);
-}
-
-@media (max-height: 450px) {
-    body {
-        align-items: flex-start;
-    }
+    background: rgba(255,255,255,0.15);
 }
 </style>
 </head>
@@ -83,25 +80,28 @@ body {
 
 <div class="stage">
 
-    <!-- Main template flow image -->
+    <!-- TEMPLATE FLOW IMAGE -->
+
     <img
         src="screen1.jpg"
-        alt="Birthday scrapbook template flow"
+        alt="Birthday Template Flow"
     >
 
-    <!-- VIEW DEMO TEMPLATE -->
+    <!-- VIEW DEMO BUTTON -->
+
     <a
         href="demo1.html"
         class="hotspot demo-button"
-        aria-label="View demo template"
-    ></a>
+        aria-label="View Demo Template">
+    </a>
 
-    <!-- USE THIS TEMPLATE -->
+    <!-- USE TEMPLATE BUTTON -->
+
     <a
         href="sender1.html"
         class="hotspot use-button"
-        aria-label="Use this birthday template"
-    ></a>
+        aria-label="Use This Template">
+    </a>
 
 </div>
 
