@@ -1,0 +1,709 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RHK WISHES | Book of Memories</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Poppins:wght@400;500;600;700&display=swap');
+
+:root {
+  --pink: #f08abd;
+  --cream: #fff6e8;
+  --black: #111;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse at top, #322334, #100e16 70%);
+  color: white;
+  font-family: 'Poppins', sans-serif;
+  overflow-x: hidden;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.screen {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 15px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* INTRO */
+
+#intro {
+  flex-direction: column;
+  text-align: center;
+  gap: 25px;
+}
+
+.brand {
+  color: var(--pink);
+  letter-spacing: 6px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.intro-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(35px, 8vw, 65px);
+  line-height: 1.1;
+}
+
+.intro-title span {
+  color: var(--pink);
+}
+
+.intro-subtitle {
+  color: #c9bdc9;
+  font-size: 13px;
+  max-width: 310px;
+  line-height: 1.8;
+}
+
+.intro-icon {
+  font-size: 65px;
+  filter: drop-shadow(0 10px 20px #000);
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  50% { transform: translateY(-12px) rotate(3deg); }
+}
+
+.intro-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  width: min(100%, 310px);
+  margin-top: 10px;
+}
+
+.primary-btn,
+.secondary-btn {
+  padding: 16px 20px;
+  border-radius: 40px;
+  font-size: 13px;
+  font-weight: 700;
+  transition: .25s;
+}
+
+.primary-btn {
+  color: #24101e;
+  background: linear-gradient(120deg, #ffacd6, #ed73b1);
+  box-shadow: 0 8px 25px #ee80b344;
+}
+
+.secondary-btn {
+  color: white;
+  border: 1px solid #d58ab8;
+  background: #ffffff0a;
+}
+
+.primary-btn:active,
+.secondary-btn:active {
+  transform: scale(.96);
+}
+
+/* DEMO SCREEN */
+
+#demo {
+  flex-direction: column;
+  gap: 20px;
+  overflow: hidden;
+}
+
+.demo-heading {
+  text-align: center;
+}
+
+.demo-heading h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(23px, 5vw, 34px);
+}
+
+.demo-heading p {
+  color: #c8bac7;
+  font-size: 11px;
+  margin-top: 7px;
+}
+
+.book-area {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  perspective: 1800px;
+  padding: 10px 0;
+}
+
+.book {
+  position: relative;
+  width: min(92vw, 820px);
+  height: min(65vh, 570px);
+  min-height: 310px;
+  max-height: 570px;
+  transform-style: preserve-3d;
+  filter: drop-shadow(0 25px 25px #0009);
+}
+
+/* Pages behind the cover */
+
+.spread {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 4px 9px 9px 4px;
+  background: var(--cream);
+  box-shadow: 0 5px 15px #0007;
+}
+
+.spread img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+  background: var(--cream);
+}
+
+.spread.current {
+  z-index: 2;
+}
+
+/* Cover */
+
+.cover {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  transform-origin: left center;
+  transform-style: preserve-3d;
+  transition: transform 2s cubic-bezier(.65,0,.2,1);
+  border-radius: 5px 12px 12px 5px;
+}
+
+.cover.open {
+  transform: rotateY(-165deg);
+}
+
+.cover-front,
+.cover-back {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: 5px 12px 12px 5px;
+  background: #090909;
+  box-shadow: inset -7px 0 15px #ffffff22;
+}
+
+.cover-front img,
+.cover-back img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.cover-back {
+  transform: rotateY(180deg);
+  background: #171017;
+}
+
+/* Page turning */
+
+.flip-sheet {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  transform-origin: right center;
+  transform-style: preserve-3d;
+  display: none;
+  pointer-events: none;
+}
+
+.flip-sheet.turning {
+  display: block;
+  animation: turnPage 1.5s cubic-bezier(.65,0,.2,1) forwards;
+}
+
+.flip-front,
+.flip-back {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  background: var(--cream);
+}
+
+.flip-front img,
+.flip-back img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.flip-back {
+  transform: rotateY(180deg);
+}
+
+@keyframes turnPage {
+  0% {
+    transform: rotateY(0deg);
+    filter: brightness(1);
+  }
+  45% {
+    filter: brightness(.7);
+  }
+  100% {
+    transform: rotateY(-180deg);
+    filter: brightness(1);
+  }
+}
+
+/* Controls */
+
+.book-controls {
+  text-align: center;
+  width: 100%;
+}
+
+#startBook {
+  background: linear-gradient(120deg, #ffa6d2, #e76caa);
+  color: #25101f;
+  padding: 15px 25px;
+  border-radius: 35px;
+  font-size: 13px;
+  font-weight: 700;
+  box-shadow: 0 8px 25px #e878ad44;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  50% { box-shadow: 0 0 0 9px #ec8bb222; }
+}
+
+#nextPage {
+  background: #fff;
+  color: #171017;
+  padding: 12px 27px;
+  border-radius: 30px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+#replay {
+  background: transparent;
+  border: 1px solid #f1a0c8;
+  color: #ffc0dc;
+  padding: 12px 24px;
+  border-radius: 30px;
+  font-size: 12px;
+}
+
+.status {
+  color: #d7c6d4;
+  font-size: 11px;
+  margin-top: 12px;
+  min-height: 18px;
+}
+
+.progress {
+  display: flex;
+  justify-content: center;
+  gap: 7px;
+  margin-top: 12px;
+}
+
+.progress span {
+  height: 5px;
+  width: 24px;
+  border-radius: 20px;
+  background: #ffffff30;
+  transition: .4s;
+}
+
+.progress span.active {
+  background: var(--pink);
+  width: 35px;
+}
+
+.back-btn {
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  color: white;
+  background: #ffffff15;
+  border: 1px solid #ffffff25;
+  padding: 9px 14px;
+  border-radius: 20px;
+  font-size: 11px;
+  z-index: 30;
+}
+
+@media (max-width: 500px) {
+  .book {
+    width: 94vw;
+    height: min(59vh, 440px);
+    min-height: 260px;
+  }
+
+  #demo {
+    gap: 14px;
+  }
+
+  .book-area {
+    padding: 5px 0;
+  }
+
+  .demo-heading p {
+    font-size: 10px;
+  }
+}
+
+@media (max-height: 650px) {
+  .book {
+    height: 55vh;
+    min-height: 230px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- INTRO -->
+
+<section class="screen" id="intro">
+
+  <div class="brand">RHK WISHES</div>
+
+  <div class="intro-icon">📖</div>
+
+  <h1 class="intro-title">
+    A Book Full Of<br>
+    <span>Memories.</span>
+  </h1>
+
+  <p class="intro-subtitle">
+    Every picture tells a story. Every page holds a memory.
+    Open this special birthday book.
+  </p>
+
+  <div class="intro-buttons">
+    <button class="primary-btn" id="seeDemo">
+      ✨ See Demo Template
+    </button>
+
+    <button class="secondary-btn" id="useTemplate">
+      💗 Use This Template
+    </button>
+  </div>
+
+  <p style="font-size:10px;color:#8e7e8e">
+    Made with love · RHK WISHES
+  </p>
+
+</section>
+
+
+<!-- DEMO -->
+
+<section class="screen hidden" id="demo">
+
+  <button class="back-btn" id="backHome">← Back</button>
+
+  <div class="demo-heading">
+    <div class="brand">YOUR SPECIAL STORY</div>
+    <h2>Book of Memories</h2>
+    <p>A little book, a lifetime of beautiful moments ♡</p>
+  </div>
+
+  <div class="book-area">
+
+    <div class="book" id="book">
+
+      <!-- First spread: Pages 2–3 -->
+      <div class="spread" id="spread1">
+        <img src="201830.jpg" alt="Memory book pages 2 and 3">
+      </div>
+
+      <!-- Second spread: Pages 4–5 -->
+      <div class="spread hidden" id="spread2">
+        <img src="201832.jpg" alt="Memory book pages 4 and 5">
+      </div>
+
+      <!-- Third spread: Pages 6–7 -->
+      <div class="spread hidden" id="spread3">
+        <img src="201834.jpg" alt="Memory book pages 6 and 7">
+      </div>
+
+      <!-- Animated page -->
+      <div class="flip-sheet" id="flipSheet">
+        <div class="flip-front">
+          <img id="flipFrontImage" src="201830.jpg" alt="">
+        </div>
+        <div class="flip-back">
+          <img id="flipBackImage" src="201832.jpg" alt="">
+        </div>
+      </div>
+
+      <!-- Front cover -->
+      <div class="cover" id="cover">
+
+        <div class="cover-front">
+          <img src="201816.jpg" alt="Happy Birthday memory book cover">
+        </div>
+
+        <div class="cover-back">
+          <div style="height:100%;display:flex;align-items:center;
+          justify-content:center;color:#f5a0cb;
+          font-family:'Playfair Display';font-size:24px;
+          text-align:center;padding:25px">
+            A little book<br>of beautiful memories ♡
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="book-controls">
+
+    <button id="startBook">
+      💗 Click to See Book of Memories
+    </button>
+
+    <button id="nextPage" class="hidden">
+      Turn the Page → 
+    </button>
+
+    <button id="replay" class="hidden">
+      ↻ Read Again
+    </button>
+
+    <div class="status" id="status">
+      Your memories are waiting...
+    </div>
+
+    <div class="progress">
+      <span class="active" id="dot1"></span>
+      <span id="dot2"></span>
+      <span id="dot3"></span>
+    </div>
+
+  </div>
+
+</section>
+
+
+<script>
+const intro = document.getElementById("intro");
+const demo = document.getElementById("demo");
+
+const cover = document.getElementById("cover");
+const startBook = document.getElementById("startBook");
+const nextPage = document.getElementById("nextPage");
+const replay = document.getElementById("replay");
+
+const statusText = document.getElementById("status");
+const flipSheet = document.getElementById("flipSheet");
+
+const spreads = [
+  document.getElementById("spread1"),
+  document.getElementById("spread2"),
+  document.getElementById("spread3")
+];
+
+const images = [
+  "201830.jpg",
+  "201832.jpg",
+  "201834.jpg"
+];
+
+const messages = [
+  "Beautiful moments with beautiful people ♡",
+  "Bigger, brighter and happier memories!",
+  "Here's to many more beautiful moments ♡"
+];
+
+let currentPage = 0;
+let bookStarted = false;
+let busy = false;
+
+function showIntro() {
+  demo.classList.add("hidden");
+  intro.classList.remove("hidden");
+}
+
+function showDemo() {
+  intro.classList.add("hidden");
+  demo.classList.remove("hidden");
+  resetBook();
+}
+
+document.getElementById("seeDemo").addEventListener("click", showDemo);
+
+document.getElementById("useTemplate").addEventListener("click", () => {
+  window.location.href = "sender1.html";
+});
+
+document.getElementById("backHome").addEventListener("click", showIntro);
+
+function updateProgress() {
+  for (let i = 1; i <= 3; i++) {
+    document.getElementById("dot" + i)
+      .classList.toggle("active", i <= currentPage + 1);
+  }
+}
+
+function resetBook() {
+  currentPage = 0;
+  bookStarted = false;
+  busy = false;
+
+  cover.classList.remove("open");
+
+  spreads.forEach((spread, i) => {
+    spread.classList.toggle("hidden", i !== 0);
+    spread.style.zIndex = i === 0 ? "2" : "1";
+  });
+
+  flipSheet.classList.remove("turning");
+
+  startBook.classList.remove("hidden");
+  nextPage.classList.add("hidden");
+  replay.classList.add("hidden");
+
+  statusText.textContent = "Your memories are waiting...";
+  updateProgress();
+}
+
+/* OPEN COVER */
+
+startBook.addEventListener("click", () => {
+  if (busy || bookStarted) return;
+
+  busy = true;
+  bookStarted = true;
+
+  startBook.classList.add("hidden");
+  statusText.textContent = "Opening your beautiful memories...";
+
+  // Slowly open the front cover
+  cover.classList.add("open");
+
+  setTimeout(() => {
+    busy = false;
+    statusText.textContent = messages[0];
+    nextPage.classList.remove("hidden");
+  }, 2100);
+});
+
+
+/* TURN TO NEXT SPREAD */
+
+nextPage.addEventListener("click", () => {
+  if (busy || currentPage >= 2) return;
+
+  busy = true;
+
+  const oldPage = currentPage;
+  const newPage = currentPage + 1;
+
+  // Put the new spread behind the turning page
+  spreads[newPage].classList.remove("hidden");
+  spreads[newPage].style.zIndex = "1";
+  spreads[oldPage].style.zIndex = "2";
+
+  flipSheet.classList.remove("turning");
+
+  const frontImage = document.getElementById("flipFrontImage");
+  const backImage = document.getElementById("flipBackImage");
+
+  frontImage.src = images[oldPage];
+  backImage.src = images[newPage];
+
+  // Let the browser prepare the page before animation
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      flipSheet.classList.add("turning");
+    });
+  });
+
+  statusText.textContent = "Turning the page...";
+
+  setTimeout(() => {
+    spreads[oldPage].classList.add("hidden");
+
+    spreads[newPage].style.zIndex = "2";
+
+    flipSheet.classList.remove("turning");
+
+    currentPage = newPage;
+    updateProgress();
+
+    statusText.textContent = messages[currentPage];
+
+    busy = false;
+
+    if (currentPage === 2) {
+      nextPage.classList.add("hidden");
+      replay.classList.remove("hidden");
+    }
+  }, 1550);
+});
+
+
+/* REPLAY */
+
+replay.addEventListener("click", () => {
+  resetBook();
+});
+
+
+/* PRELOAD THE SPREAD IMAGES */
+
+images.forEach(src => {
+  const image = new Image();
+  image.src = src;
+});
+</script>
+
+</body>
+</html>
+
