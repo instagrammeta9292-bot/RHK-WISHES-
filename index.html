@@ -4,19 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>RHK WISHES</title>
-
-<!-- GOOGLE SITE VERIFICATION -->
-<meta name="google-site-verification" content="0vnZFZ154D1f55L_hxSQ496_-ElRPEg7fwjvXndFCXY" />
-
-<!-- SEO INFORMATION -->
-<meta name="description" content="RHK WISHES is a birthday surprise website where you can explore beautiful birthday templates, personalised photo books and creative birthday wishes.">
-
-<meta name="keywords" content="RHK WISHES, birthday wishes, birthday surprise, birthday templates, online birthday website, personalised birthday wishes">
-
-<meta name="author" content="RHK WISHES">
-<meta name="robots" content="index, follow">
 
 <style>
 * {
@@ -393,7 +381,7 @@ menuBtn.addEventListener("click", toggleMenu);
 menuOverlay.addEventListener("click", closeMenu);
 
 
-/* BIRTHDAY TEMPLATE DETECTION */
+/* DEMO TEMPLATE DETECTION */
 
 const templateGrid = document.getElementById("templateGrid");
 const templateCount = document.getElementById("templateCount");
@@ -406,7 +394,7 @@ const MAX_TEMPLATES = 30;
 /* CHECK HTML FILE */
 async function checkTemplate(number) {
 
-    const file = `birthday${number}.html`;
+    const file = `demo${number}.html`;
 
     try {
         const response = await fetch(file, {
@@ -434,8 +422,8 @@ async function checkTemplate(number) {
 /* CREATE TEMPLATE CARD */
 function createTemplateCard(number) {
 
-    const fileName = `birthday${number}.html`;
-    const imageName = `birthday${number}.jpg`;
+    const fileName = `demo${number}.html`;
+    const imageName = `demo${number}.jpg`;
 
     const card = document.createElement("a");
 
@@ -467,12 +455,12 @@ function loadTrending(number) {
     const link = document.createElement("a");
 
     link.className = "trending-link";
-    link.href = `birthday${number}.html`;
+    link.href = `demo${number}.html`;
 
     const image = document.createElement("img");
 
     image.className = "trending-image";
-    image.src = `birthday${number}.jpg`;
+    image.src = `demo${number}.jpg`;
     image.alt = `Trending Birthday Template ${number}`;
 
     image.onerror = function() {
