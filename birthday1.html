@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-<title>RHK WISHES - Birthday Template</title>
+<title>RHK WISHES</title>
 
 <style>
 * {
@@ -18,62 +18,147 @@ html, body {
     width: 100%;
     height: 100%;
     overflow: hidden;
-    background: #fff5e9;
     font-family: Arial, sans-serif;
-}
-
-body {
-    height: 100vh;
-    height: 100dvh;
+    background: #fff5e9;
 }
 
 .stage {
     position: relative;
     width: 100%;
-    height: 100%;
+    height: 100vh;
+    height: 100dvh;
     overflow: hidden;
 }
 
-.background-image {
+/* FLOW IMAGE */
+
+.flow-image {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
-    display: block;
     object-fit: fill;
 }
 
-/* BUTTON CLICK AREAS */
+/* BUTTON AREA */
 
-.hotspot {
+.button-panel {
     position: absolute;
-    top: 80.5%;
-    height: 11.5%;
-    z-index: 10;
-    display: block;
-    cursor: pointer;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 20%;
+    z-index: 5;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 12px 12px 22px;
+    gap: 12px;
+
+    background: linear-gradient(
+        to bottom,
+        rgba(255,248,237,0.96),
+        #fff0e8
+    );
+}
+
+/* BUTTON COMMON */
+
+.action-button {
+    flex: 1;
+    min-width: 0;
+    height: 76px;
+    border-radius: 17px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+
+    text-decoration: none;
+    font-weight: 800;
+    font-size: clamp(11px, 3.4vw, 15px);
+    letter-spacing: 0.2px;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+
     -webkit-tap-highlight-color: transparent;
 }
 
-/* VIEW DEMO */
+/* DEMO BUTTON */
 
 .demo-button {
-    left: 2.5%;
-    width: 46.5%;
+    color: #171717;
+    background: #ffffff;
+    border: 2px solid #222;
+    box-shadow:
+        0 5px 0 #222,
+        0 9px 18px rgba(0,0,0,0.12);
 }
 
-/* USE TEMPLATE */
+.demo-icon {
+    font-size: 21px;
+    line-height: 1;
+}
+
+.demo-subtitle {
+    font-size: 10px;
+    font-weight: 500;
+    color: #777;
+}
+
+/* USE TEMPLATE BUTTON */
 
 .use-button {
-    right: 2.5%;
-    width: 46.5%;
+    color: #fff;
+    background: linear-gradient(
+        135deg,
+        #ff9aca,
+        #ed4b9e
+    );
+
+    border: 2px solid #d83c89;
+
+    box-shadow:
+        0 5px 0 #bd3679,
+        0 9px 20px rgba(235,65,145,0.28);
 }
 
-/* TAP EFFECT */
+.use-icon {
+    font-size: 21px;
+    line-height: 1;
+}
 
-.hotspot:active {
-    background: rgba(255,255,255,0.12);
-    border-radius: 20px;
+.use-subtitle {
+    font-size: 10px;
+    font-weight: 500;
+    color: #fff;
+    opacity: 0.95;
+}
+
+/* TAP ANIMATION */
+
+.action-button:active {
+    transform: translateY(5px) scale(0.97);
+    box-shadow: 0 1px 0 rgba(0,0,0,0.3);
+}
+
+/* SMALL SCREENS */
+
+@media (max-height: 600px) {
+    .button-panel {
+        height: 19%;
+        padding: 8px 10px 12px;
+    }
+
+    .action-button {
+        height: 58px;
+    }
 }
 
 </style>
@@ -83,29 +168,41 @@ body {
 
 <div class="stage">
 
-    <!-- MOBILE TEMPLATE IMAGE -->
+    <!-- TEMPLATE FLOW IMAGE -->
 
     <img
         src="screen1.jpg"
-        class="background-image"
-        alt="Birthday template flow"
+        class="flow-image"
+        alt="Birthday scrapbook template flow"
     >
 
-    <!-- VIEW DEMO TEMPLATE -->
+    <!-- REAL INTERACTIVE BUTTONS -->
 
-    <a
-        href="demo1.html"
-        class="hotspot demo-button"
-        aria-label="View demo template">
-    </a>
+    <div class="button-panel">
 
-    <!-- USE THIS TEMPLATE -->
+        <!-- DEMO -->
 
-    <a
-        href="sender1.html"
-        class="hotspot use-button"
-        aria-label="Use this template">
-    </a>
+        <a
+            href="demo1.html"
+            class="action-button demo-button"
+        >
+            <span class="demo-icon">▶</span>
+            <span>VIEW DEMO</span>
+            <span class="demo-subtitle">See all pages</span>
+        </a>
+
+        <!-- USE TEMPLATE -->
+
+        <a
+            href="sender1.html"
+            class="action-button use-button"
+        >
+            <span class="use-icon">✦</span>
+            <span>USE THIS TEMPLATE</span>
+            <span class="use-subtitle">Create your surprise</span>
+        </a>
+
+    </div>
 
 </div>
 
