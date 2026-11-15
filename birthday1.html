@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-<title>Birthday Template Flow | RHK WISHES</title>
+<title>RHK WISHES - Birthday Template</title>
 
 <style>
 * {
@@ -18,7 +18,7 @@ html, body {
     width: 100%;
     height: 100%;
     overflow: hidden;
-    background: #f6f1eb;
+    background: #fff5e9;
     font-family: Arial, sans-serif;
 }
 
@@ -29,50 +29,53 @@ body {
 
 .stage {
     position: relative;
-    width: 100vw;
-    height: 100vh;
-    height: 100dvh;
+    width: 100%;
+    height: 100%;
     overflow: hidden;
 }
 
-.stage img {
-    display: block;
+.background-image {
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
+    display: block;
     object-fit: fill;
 }
 
-/* Invisible clickable button areas */
+/* BUTTON CLICK AREAS */
 
 .hotspot {
     position: absolute;
-    bottom: 0;
-    height: 12%;
-    z-index: 5;
+    top: 80.5%;
+    height: 11.5%;
+    z-index: 10;
     display: block;
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
 }
 
-/* VIEW DEMO TEMPLATE */
+/* VIEW DEMO */
 
 .demo-button {
-    left: 1%;
-    width: 49%;
+    left: 2.5%;
+    width: 46.5%;
 }
 
-/* USE THIS TEMPLATE */
+/* USE TEMPLATE */
 
 .use-button {
-    right: 1%;
-    width: 49%;
+    right: 2.5%;
+    width: 46.5%;
 }
 
-/* Tap effect */
+/* TAP EFFECT */
 
 .hotspot:active {
-    background: rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.12);
+    border-radius: 20px;
 }
+
 </style>
 </head>
 
@@ -80,27 +83,28 @@ body {
 
 <div class="stage">
 
-    <!-- TEMPLATE FLOW IMAGE -->
+    <!-- MOBILE TEMPLATE IMAGE -->
 
     <img
         src="screen1.jpg"
-        alt="Birthday Template Flow"
+        class="background-image"
+        alt="Birthday template flow"
     >
 
-    <!-- VIEW DEMO BUTTON -->
+    <!-- VIEW DEMO TEMPLATE -->
 
     <a
         href="demo1.html"
         class="hotspot demo-button"
-        aria-label="View Demo Template">
+        aria-label="View demo template">
     </a>
 
-    <!-- USE TEMPLATE BUTTON -->
+    <!-- USE THIS TEMPLATE -->
 
     <a
         href="sender1.html"
         class="hotspot use-button"
-        aria-label="Use This Template">
+        aria-label="Use this template">
     </a>
 
 </div>
